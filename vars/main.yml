@@ -1,0 +1,4 @@
+---
+# vars file for gcp-bucket-provision
+scopes:
+  - "https://www.googleapis.com/auth/devstorage.read_write"

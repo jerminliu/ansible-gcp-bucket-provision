@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+      gcp_project: name-of-gcp-project
+      gcp_bucket: name-of-gcs-bucket
+      directory: destination-directory-name
+  tasks:
+    - name: upload to bucket
+      include_role:
+        name: gcp-bucket-provision
+      vars:
+        file: "{{ item }}"
+      with_filetree: "/some/source/path"
+      when: item.state == 'file'

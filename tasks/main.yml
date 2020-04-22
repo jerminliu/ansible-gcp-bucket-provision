@@ -1,0 +1,16 @@
+---
+# tasks file for gcp-bucket-provision
+- name: generate file out fo template
+  template:
+    src: "{{ file.src }}"
+    dest: "/tmp/{{ file.src | hash('sha1') }}"
+- name: import directory to bucket
+  gcp_storage_object:
+    action: upload
+    overwrite: true
+    bucket: "{{ gcp_bucket }}"
+    src: "/tmp/{{ file.src | hash('sha1') }}"
+    dest: "{{ directory }}/{{ file.path }}"
+    project: "{{ gcp_project }}"
+    scopes: "{{ scopes }}"
+    state: present
