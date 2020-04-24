@@ -4,7 +4,7 @@
   template:
     src: "{{ file.src }}"
     dest: "/tmp/{{ file.src | hash('sha1') }}"
-- name: import directory to bucket
+- name: upload file to bucket
   gcp_storage_object:
     action: upload
     overwrite: true
@@ -14,3 +14,7 @@
     project: "{{ gcp_project }}"
     scopes: "{{ scopes }}"
     state: present
+- name: delete tmp file
+  file:
+    path: "/tmp/{{ file.src | hash('sha1') }}"
+    state: absent
